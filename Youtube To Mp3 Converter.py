@@ -3,6 +3,7 @@ import pytube as pt
 from pytube import YouTube
 from pytube import Playlist
 import os
+import re
 #from tkinter import *
 #import requests
 
@@ -61,9 +62,12 @@ def main():
                     p = Playlist(entires[0])
                     playlist = p.video_urls
                     for i in range(len(playlist)):
+                        if "music" in playlist[i]:
+                            playlist[i].replace("music.", '')
                         VideoNames.append(FindVideoName(playlist[i]))
                         YoutubeLinks.append(playlist[i])
                 else:
+                    entires[0].replace("music.", '')
                     VideoNames.append(FindVideoName(entires[0]))
                     YoutubeLinks.append(entires[0])
                 #print(YoutubeLinks)
