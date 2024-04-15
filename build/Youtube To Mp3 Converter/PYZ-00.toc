@@ -1,5 +1,5 @@
-('C:\\Users\\primu\\OneDrive\\Desktop\\New folder\\build\\Youtube To Mp3 '
- 'Converter\\PYZ-00.pyz',
+('C:\\Users\\primu\\OneDrive\\Desktop\\New '
+ 'folder\\Youtube-to-MP3\\build\\Youtube To Mp3 Converter\\PYZ-00.pyz',
  [('PySimpleGUI',
    'C:\\Python312\\Lib\\site-packages\\PySimpleGUI\\__init__.py',
    'PYMODULE'),
