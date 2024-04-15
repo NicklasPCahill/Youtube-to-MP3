@@ -57,17 +57,15 @@ def main():
                 window['CopyError'].update(visible = True)
             if noCopy == True:
                 window['CopyError'].update(visible = False)
-
+                if "music" in entires[0]:
+                        entires[0].replace("music.", '')
                 if "playlist" in entires[0] or "Playlist" in entires[0]:
                     p = Playlist(entires[0])
                     playlist = p.video_urls
                     for i in range(len(playlist)):
-                        if "music" in playlist[i]:
-                            playlist[i].replace("music.", '')
                         VideoNames.append(FindVideoName(playlist[i]))
                         YoutubeLinks.append(playlist[i])
                 else:
-                    entires[0].replace("music.", '')
                     VideoNames.append(FindVideoName(entires[0]))
                     YoutubeLinks.append(entires[0])
                 #print(YoutubeLinks)
