@@ -4,6 +4,7 @@ from pytube import YouTube
 from pytube import Playlist
 import os
 import re
+from moviepy.editor import *
 #from tkinter import *
 #import requests
 
@@ -25,13 +26,22 @@ Layout = [
 #VideoNames: list of video names corrisponding to linklist p.s. i ended up not needing it but left it in anyway
 #FileDestination: Where to put all mp3s when downloaded
 def Mp3Conversion(linkList, VideoNames, FileDestination):
-    destination = FileDestination or '.'
+    destination = FileDestination or os.getcwd()
     for i in range(len(linkList)):
         audio = YouTube(linkList[i]).streams.get_audio_only()
-        out_file = audio.download(output_path=destination)
-        base, ext = os.path.splitext(out_file)
-        new_file = base + '.mp3'
-        os.rename(out_file, new_file)
+        #audio = YouTube(linkList[i]).streams.filter(only_audio=True).first()
+        #out_file = audio.download(output_path=destination)
+        mp3 = AudioFileClip(audio.url)
+        mp3.write_audiofile("output" + ".mp3")
+        mp3.close()
+        #title = audio.title.encode('ascii','ignore')
+        #title = title.decode()
+        title = audio.title
+        title = title.replace("<",'').replace('>','').replace(':','').replace('\\','').replace('/','').replace('|','').replace('"','').replace('?','').replace('*','')
+        os.rename('output.mp3', FileDestination + '/' + title + '.mp3')
+        #base, ext = os.path.splitext(out_file)
+        #new_file = base + '.mp3'
+        #os.rename(out_file, new_file)
     return
 
 #FindVideoName: takes link and returns the name of the video/ pretty simple func
