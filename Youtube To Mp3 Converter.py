@@ -29,29 +29,21 @@ def Mp3Conversion(linkList, VideoNames, FileDestination):
     destination = FileDestination or os.getcwd()
     for i in range(len(linkList)):
         audio = YouTube(linkList[i]).streams.get_audio_only()
-        #audio = YouTube(linkList[i]).streams.filter(only_audio=True).first()
-        #out_file = audio.download(output_path=destination)
+        
         mp3 = AudioFileClip(audio.url)
         mp3.write_audiofile("output" + ".mp3")
         mp3.close()
-        #title = audio.title.encode('ascii','ignore')
-        #title = title.decode()
+        
         title = audio.title
         title = title.replace("<",'').replace('>','').replace(':','').replace('\\','').replace('/','').replace('|','').replace('"','').replace('?','').replace('*','')
         os.rename('output.mp3', FileDestination + '/' + title + '.mp3')
-        #base, ext = os.path.splitext(out_file)
-        #new_file = base + '.mp3'
-        #os.rename(out_file, new_file)
     return
 
 #FindVideoName: takes link and returns the name of the video/ pretty simple func
 #link: link of video
 def FindVideoName(link):
-    #print (link)
     video = YouTube(link)
     return video.title
-    #video = Null
-    #print(video.title)
 
 
 #main: handles window operations as well as some logic for links and its a mess but still works as intended for windows 10 it kinda works for 11 idk
@@ -64,7 +56,7 @@ def main():
     FileDestination = ''                                            #records the file destination for where to download to
     noCopy = True                                                   #bool flag for purpose of checking if song exists in the list already. starts at false
  
-    while True:
+    while True:                                                     #Keeps window open while in use
         event, entires = window.read() 
         if event == sg.WIN_CLOSED or event == 'Exit':               #exits program
             break
@@ -85,8 +77,6 @@ def main():
                 else:                                                    #single song link handler
                     VideoNames.append(FindVideoName(entires[0]))         
                     YoutubeLinks.append(entires[0])
-                #print(YoutubeLinks)
-                #print(VideoNames)
                 SongBox.update(values=VideoNames)
                 if(ConvertButton.Disabled == True):                     #waits until song is added to list before any conversion can be done
                     ConvertButton.update(disabled=False)
@@ -102,8 +92,6 @@ def main():
             Mp3Conversion(YoutubeLinks, VideoNames, FileDestination)
         elif event == '-IN-':                                           #assigns file destination when downloading
             FileDestination = window['-IN-'].Get()
-            #print(FileDestination)
-        
 
 
 main()
